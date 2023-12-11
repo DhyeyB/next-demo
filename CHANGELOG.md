@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0](https://github.com/DhyeyB/next-demo/compare/v1.0.1...v2.0.0) (2023-12-11)
+
+
+### Miscellaneous Chores
+
+* release 2.0.0 ([1ca7eb9](https://github.com/DhyeyB/next-demo/commit/1ca7eb9a4233f2d313b4bd7dbcd830504d060885))
+
 ## [1.0.1](https://github.com/DhyeyB/next-demo/compare/v1.0.0...v1.0.1) (2023-12-11)
 
 
