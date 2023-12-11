@@ -2,7 +2,7 @@ name: Electron Desktop App Build
 
 on:
   push:
-    branches: ["test2"]
+    branches: ["main"]
 
 # permissions:
 #   contents: write
