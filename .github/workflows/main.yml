@@ -1,8 +1,9 @@
-name: Electron Desktop App Build
+name: Release Please
 
 on:
   push:
-    branches: ["main"]
+    branches: 
+      - main
 
 permissions:
   contents: write
@@ -18,7 +19,7 @@ jobs:
     steps:
       - uses: google-github-actions/release-please-action@v4
         with:
-          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           release-type: simple
 
       - name: Check out Git repository
