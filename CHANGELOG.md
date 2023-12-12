@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/DhyeyB/next-demo/compare/v3.0.0...v3.0.1) (2023-12-12)
+
+
+### Bug Fixes
+
+* release testing ([1944dff](https://github.com/DhyeyB/next-demo/commit/1944dff9db945b35977b2fb514cfe2c90045196b))
+
 ## [3.0.0](https://github.com/DhyeyB/next-demo/compare/v2.0.0...v3.0.0) (2023-12-11)
 
 
