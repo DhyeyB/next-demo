@@ -29,3 +29,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+
+      - name: Install and Run Appium Server
+        run: |
+          npm install -g appium@v1.22
+          appium -v
+          npm -g install npm
+          # appium driver install uiautomator2
+          appium > /dev/null &
