@@ -1,5 +1,4 @@
 name: Release Please
-
 on:
   push:
     branches: 
@@ -9,10 +8,11 @@ permissions:
   contents: write
   pull-requests: write
 
-jobs:
-  Build:
-    runs-on: ubuntu-latest
 
+jobs:
+  spell-check:
+    name: spell check
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
