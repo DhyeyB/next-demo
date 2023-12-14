@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.2](https://github.com/DhyeyB/next-demo/compare/v3.0.1...v3.0.2) (2023-12-14)
+
+
+### Bug Fixes
+
+* Update main.yml ([7e1e6d8](https://github.com/DhyeyB/next-demo/commit/7e1e6d82f94d33415792b53d92d308f32a8f221f))
+
 ## [3.0.1](https://github.com/DhyeyB/next-demo/compare/v3.0.0...v3.0.1) (2023-12-12)
 
 
