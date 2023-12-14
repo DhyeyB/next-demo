@@ -11,21 +11,18 @@ permissions:
 
 jobs:
   Build:
-    runs-on: macos-latest
-    # permissions:
-    #   contents: write
-    #   pull-requests: write
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: google-github-actions/release-please-action@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: simple
+      - uses: actions/checkout@v3
 
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: rojopolis/spellcheck-github-actions@0.35.0
+        name: Spellcheck
         with:
-          node-version: 18
+          output_file: spellcheck-output.txt
+
+      - uses: actions/upload-artifact@v3
+        if: '!cancelled()' # Do not upload artifact if job was cancelled
+        with:
+          name: Spellcheck Output
+          path: spellcheck-output.txt
