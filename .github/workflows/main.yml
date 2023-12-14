@@ -3,36 +3,49 @@ on:
   push:
     branches: 
       - main
-
-permissions:
-  contents: write
-  pull-requests: write
+# permissions:
+#   contents: write
+#   pull-requests: write
 
 jobs:
-  Build:
-    runs-on: macos-latest
-    # permissions:
-    #   contents: write
-    #   pull-requests: write
-
+  conventional-commits:
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: actions/checkout@v3
+  
+      - uses: webiny/action-conventional-commits@v1.2.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: simple
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          allowed-commit-types: "feat,fix,chore,docs,style,refactor,perf,test"
 
-      - name: Check out Git repository
-        uses: actions/checkout@v2
+          
+  # Build:
+  #   runs-on: macos-latest
+  #   # permissions:
+  #   #   contents: write
+  #   #   pull-requests: write
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+  #   steps:
+  #     - uses: google-github-actions/release-please-action@v4
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         release-type: simple
 
-      - name: Install and Run Appium Server
-        run: |
-          npm install -g appium@v1.22
-          appium -v
-          npm -g install npm
-          # appium driver install uiautomator2
-          appium > /dev/null &
+  #     - name: Check out Git repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 18
+
+  #     - name: Install and Run Appium Server
+  #       run: |
+  #         npm install -g appium@v1.22
+  #         appium -v
+  #         npm -g install npm
+  #         # appium driver install uiautomator2
+  #         appium > /dev/null &
