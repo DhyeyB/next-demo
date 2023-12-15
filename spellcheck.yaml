@@ -1,0 +1,17 @@
+# spellcheck.yaml
+
+# Specify the dictionaries to use
+dictionaries:
+  - en_US
+
+# Specify the file patterns to include in the spell check
+files:
+  - "*.md"
+  - "*.txt"
+  - "*.yml"
+
+# Specify files or directories to exclude from the spell check
+exclude:
+  - "node_modules/"
+  - "build/"
+
