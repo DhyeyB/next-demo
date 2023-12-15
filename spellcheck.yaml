@@ -5,7 +5,9 @@ matrix:
       lang: en
       d: en_US
     sources:
-      - "next.config.js"
+      - "*.md"
+    pipeline:
+      - pyspelling.filters.markdown:
     # files:
     #   - "*.md"
     #   - "*.txt"
