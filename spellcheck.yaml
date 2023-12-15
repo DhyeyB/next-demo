@@ -6,8 +6,10 @@ matrix:
       d: en_US
     sources:
       - "*.md"
+      - "*.js"
     pipeline:
       - pyspelling.filters.markdown:
+      - pyspelling.filters.javascript:
     # files:
     #   - "*.md"
     #   - "*.txt"
@@ -19,6 +21,3 @@ matrix:
       ignore:
         - "pyspelling"
         - "GitHub"
-    custom:
-      - "NextConfig"
-      - "nextConfig"
