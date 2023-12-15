@@ -17,3 +17,6 @@ matrix:
       ignore:
         - "pyspelling"
         - "GitHub"
+    custom:
+      - "NextConfig"
+      - "nextConfig"
