@@ -4,10 +4,12 @@ matrix:
     aspell:
       lang: en
       d: en_US
-    files:
-      - "*.md"
-      - "*.txt"
-      - "*.yml"
+    sources:
+      - README.md
+    # files:
+    #   - "*.md"
+    #   - "*.txt"
+    #   - "*.yml"
     exclude:
       - "node_modules/"
       - "build/"
