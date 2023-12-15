@@ -18,8 +18,9 @@ jobs:
 
       - uses: rojopolis/spellcheck-github-actions@0.35.0
         name: Spellcheck
-        # with:
-        #   output_file: spellcheck-output.txt
+        with:
+          config: ./spellcheck.yaml
+
 
       # - uses: actions/upload-artifact@v3
       #   if: '!cancelled()' # Do not upload artifact if job was cancelled
