@@ -1,21 +1,17 @@
 # spellcheck.yaml
-
-# Specify the dictionaries to use
-dictionaries:
-  - en_US
-
-# Specify the file patterns to include in the spell check
-files:
-  - "*.md"
-  - "*.txt"
-  - "*.yml"
-
-# Specify files or directories to exclude from the spell check
-exclude:
-  - "node_modules/"
-  - "build/"
-
-options:
-  ignore:
-    - "pyspelling"
-    - "GitHub"
+matrix:
+  - name: Python Source
+    aspell:
+      lang: en
+      d: en_US
+    files:
+      - "*.md"
+      - "*.txt"
+      - "*.yml"
+    exclude:
+      - "node_modules/"
+      - "build/"
+    options:
+      ignore:
+        - "pyspelling"
+        - "GitHub"
