@@ -1,6 +1,6 @@
 # spellcheck.yaml
 matrix:
-  - name: Python Source
+  - name: JavaScript
     aspell:
       lang: en
       d: en_US
