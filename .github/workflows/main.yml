@@ -19,6 +19,7 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_CHANNEL: random
+        SLACK_USERNAME: dhyey
 
 # jobs:
 #   spell-check:
