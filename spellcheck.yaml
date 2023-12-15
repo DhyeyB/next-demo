@@ -5,7 +5,7 @@ matrix:
       lang: en
       d: en_US
     sources:
-      - README.md
+      - "next.config.js"
     # files:
     #   - "*.md"
     #   - "*.txt"
