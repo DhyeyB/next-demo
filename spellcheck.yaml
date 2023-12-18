@@ -11,6 +11,7 @@ matrix:
       - '**/*.js'
       - '**/*.json'
       - '**/*.md'
+      - '**/*.ts
     pipeline:
       - pyspelling.filters.javascript
       - pyspelling.filters.text
