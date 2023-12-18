@@ -27,6 +27,12 @@
 
 matrix:
 - name: markdown
+  aspell:
+      lang: en
+      d: en_US
+  dictionary:
+    wordlists:
+    - ./en-custom.txt
   pipeline:
   - pyspelling.filters.text
   sources:
