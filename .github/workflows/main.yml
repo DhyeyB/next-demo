@@ -31,9 +31,7 @@ jobs:
       - uses: wow-actions/spell-checker@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          include: |
-            **/*.md
-            **/*.txt
+          include: **/*.md
 
       # - uses: rojopolis/spellcheck-github-actions@0.35.0
       #   name: Spellcheck
