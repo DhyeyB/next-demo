@@ -12,8 +12,8 @@ matrix:
       - '**/*.json'
       - '**/*.md'
     pipeline:
-      - pyspelling.filters.javascript:
-       - pyspelling.filters.text
+      - pyspelling.filters.javascript
+      - pyspelling.filters.text
     expect_match: false
     default_encoding: utf-8
     # files:
@@ -32,16 +32,16 @@ matrix:
 
 
 # matrix:
-  - name: markdown
-    aspell:
-        lang: en
-        d: en_US
-    dictionary:
-      wordlists:
-      - ./en-custom.txt
-    pipeline:
-    - pyspelling.filters.text
-    sources:
-    - '**/*.md'
-    expect_match: false
-    default_encoding: utf-8
+  # - name: markdown
+  #   aspell:
+  #       lang: en
+  #       d: en_US
+  #   dictionary:
+  #     wordlists:
+  #     - ./en-custom.txt
+  #   pipeline:
+  #   - pyspelling.filters.text
+  #   sources:
+  #   - '**/*.md'
+  #   expect_match: false
+  #   default_encoding: utf-8
