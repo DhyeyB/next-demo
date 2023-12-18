@@ -4,9 +4,9 @@ on:
     branches: 
       - main
 
-# permissions:
-#   contents: write
-#   pull-requests: write
+permissions:
+  contents: write
+  pull-requests: write
 
 # jobs:
 #   slackNotification:
@@ -28,7 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: rojopolis/spellcheck-github-actions@0.35.0
-        name: Spellcheck
+      - uses: wow-actions/spell-checker@v1
         with:
-          config: ./spellcheck.yaml
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - uses: rojopolis/spellcheck-github-actions@0.35.0
+      #   name: Spellcheck
+      #   with:
+      #     config: ./spellcheck.yaml
