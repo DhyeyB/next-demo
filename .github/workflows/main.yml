@@ -31,6 +31,13 @@ jobs:
       - name: check-spelling
         id: spelling
         uses: check-spelling/check-spelling@main
+        with:
+          extra_dictionaries:
+            cspell:software-terms/dict/softwareTerms.txt
+            cspell:npm/dict/npm.txt
+            cspell:typescript/dict/typescript.txt
+            cspell:node/dict/node.txt
+            cspell:k8s/dict/k8s.txt
 
       # - uses: wow-actions/spell-checker@v1
       #   with:
