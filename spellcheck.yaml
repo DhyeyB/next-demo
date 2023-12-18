@@ -21,3 +21,5 @@ matrix:
       ignore:
         - "pyspelling"
         - "GitHub"
+    custom:
+      - "localhost"
