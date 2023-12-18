@@ -28,10 +28,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: wow-actions/spell-checker@v1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          include: **/*.md
+      - name: check-spelling
+        id: spelling
+        uses: check-spelling/check-spelling@main
+
+      # - uses: wow-actions/spell-checker@v1
+      #   with:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     include: **/*.md
 
       # - uses: rojopolis/spellcheck-github-actions@0.35.0
       #   name: Spellcheck
