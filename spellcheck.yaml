@@ -23,17 +23,17 @@ matrix:
       - "localhost"
 
 
-matrix:
-- name: markdown
-  aspell:
-      lang: en
-      d: en_US
-  dictionary:
-    wordlists:
-    - ./en-custom.txt
-  pipeline:
-  - pyspelling.filters.text
-  sources:
-  - '**/*.md'
-  expect_match: false
-  default_encoding: utf-8
+# matrix:
+  - name: markdown
+    aspell:
+        lang: en
+        d: en_US
+    dictionary:
+      wordlists:
+      - ./en-custom.txt
+    pipeline:
+    - pyspelling.filters.text
+    sources:
+    - '**/*.md'
+    expect_match: false
+    default_encoding: utf-8
