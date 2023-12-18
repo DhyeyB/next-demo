@@ -31,3 +31,4 @@ readme
 tsx
 utm
 vercel
+NextConfig
