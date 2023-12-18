@@ -1,25 +1,35 @@
 # spellcheck.yaml
+# matrix:
+#   - name: JavaScript
+#     aspell:
+#       lang: en
+#       d: en_US
+#     sources:
+#       - "*.md"
+#       - "*.js"
+#     pipeline:
+#       - pyspelling.filters.markdown:
+#       - pyspelling.filters.javascript:
+#     # files:
+#     #   - "*.md"
+#     #   - "*.txt"
+#     #   - "*.yml"
+#     exclude:
+#       - "node_modules/"
+#       - "build/"
+#     options:
+#       ignore:
+#         - "pyspelling"
+#         - "GitHub"
+#     custom:
+#       - "localhost"
+
+
 matrix:
-  - name: JavaScript
-    aspell:
-      lang: en
-      d: en_US
-    sources:
-      - "*.md"
-      - "*.js"
-    pipeline:
-      - pyspelling.filters.markdown:
-      - pyspelling.filters.javascript:
-    # files:
-    #   - "*.md"
-    #   - "*.txt"
-    #   - "*.yml"
-    exclude:
-      - "node_modules/"
-      - "build/"
-    options:
-      ignore:
-        - "pyspelling"
-        - "GitHub"
-    custom:
-      - "localhost"
+- name: markdown
+  pipeline:
+  - pyspelling.filters.text
+  sources:
+  - '**/*.md'
+  expect_match: false
+  default_encoding: utf-8
