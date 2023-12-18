@@ -9,8 +9,13 @@ matrix:
       - ./en-custom.txt
     sources:
       - '**/*.js'
+      - '**/*.json'
+      - '**/*.md'
     pipeline:
       - pyspelling.filters.javascript:
+       - pyspelling.filters.text
+    expect_match: false
+    default_encoding: utf-8
     # files:
     #   - "*.md"
     #   - "*.txt"
