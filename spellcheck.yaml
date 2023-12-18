@@ -4,6 +4,9 @@ matrix:
     aspell:
       lang: en
       d: en_US
+    dictionary:
+      wordlists:
+      - ./en-custom.txt
     sources:
       - '**/*.js'
     pipeline:
