@@ -1,28 +1,26 @@
 # spellcheck.yaml
-# matrix:
-#   - name: JavaScript
-#     aspell:
-#       lang: en
-#       d: en_US
-#     sources:
-#       - "*.md"
-#       - "*.js"
-#     pipeline:
-#       - pyspelling.filters.markdown:
-#       - pyspelling.filters.javascript:
-#     # files:
-#     #   - "*.md"
-#     #   - "*.txt"
-#     #   - "*.yml"
-#     exclude:
-#       - "node_modules/"
-#       - "build/"
-#     options:
-#       ignore:
-#         - "pyspelling"
-#         - "GitHub"
-#     custom:
-#       - "localhost"
+matrix:
+  - name: JavaScript
+    aspell:
+      lang: en
+      d: en_US
+    sources:
+      - '**/*.js'
+    pipeline:
+      - pyspelling.filters.javascript:
+    # files:
+    #   - "*.md"
+    #   - "*.txt"
+    #   - "*.yml"
+    exclude:
+      - "node_modules/"
+      - "build/"
+    options:
+      ignore:
+        - "pyspelling"
+        - "GitHub"
+    custom:
+      - "localhost"
 
 
 matrix:
