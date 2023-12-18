@@ -28,23 +28,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: check-spelling
-      #   id: spelling
-      #   uses: check-spelling/check-spelling@main
-      #   with:
-      #     extra_dictionaries:
-      #       cspell:software-terms/dict/softwareTerms.txt
-      #       cspell:npm/dict/npm.txt
-      #       cspell:typescript/dict/typescript.txt
-      #       cspell:node/dict/node.txt
-      #       cspell:k8s/dict/k8s.txt
+      - name: check-spelling
+        id: spelling
+        uses: check-spelling/check-spelling@main
+        with:
+          extra_dictionaries:
+            ./en-custom.txt
+            cspell:software-terms/dict/softwareTerms.txt
+            cspell:npm/dict/npm.txt
+            cspell:typescript/dict/typescript.txt
+            cspell:node/dict/node.txt
 
       # - uses: wow-actions/spell-checker@v1
       #   with:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #     include: **/*.md
 
-      - uses: rojopolis/spellcheck-github-actions@0.35.0
-        name: Spellcheck
-        with:
-          config: ./spellcheck.yaml
+      # - uses: rojopolis/spellcheck-github-actions@0.35.0
+      #   name: Spellcheck
+      #   with:
+      #     config: ./spellcheck.yaml
