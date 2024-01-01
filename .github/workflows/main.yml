@@ -14,6 +14,7 @@ on:
 #   pull-requests: write
 
 
+
 jobs:
   conventional-commits:
     name: Conventional Commits
@@ -29,7 +30,7 @@ jobs:
               allowed-commit-types: "docs,fix,feat,chore,style,refactor,perf,test"
 
 
-              
+
 # jobs:
 #   slackNotification:
 #     name: Slack Notification
