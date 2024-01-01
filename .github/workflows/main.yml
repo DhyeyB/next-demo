@@ -3,6 +3,9 @@ on:
   push:
     branches: 
       - main
+      - staging
+      - dev
+      - feature
 
 # permissions:
 #   contents: write
