@@ -25,6 +25,7 @@ jobs:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               allowed-commit-types: "docs,fix,feat,chore,style,refactor,perf,test"
 
+              
 # jobs:
 #   slackNotification:
 #     name: Slack Notification
