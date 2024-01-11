@@ -42,7 +42,7 @@ jobs:
       uses: slackapi/slack-github-action@v1.24.0
       with:
         channel-id: 'C06E434BUPJ'
-        slack-message: "CI/CD next-demo: <@D04BZD3TY1Z>\n*Web app URL:* \n*Changelog -> *\n"
+        slack-message: "CI/CD next-demo: <@D04BZD3TY1Z>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n"
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       # uses: rtCamp/action-slack-notify@v2
