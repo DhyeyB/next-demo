@@ -39,8 +39,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Slack Notification
       uses: slackapi/slack-github-action@v1.24.0
-      with: 
-        channel-id: 'C04BK06SMFZ'
+      # with: 
+      #   channel-id: 'C04BK06SMFZ'
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
       # uses: rtCamp/action-slack-notify@v2
