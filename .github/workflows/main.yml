@@ -15,34 +15,39 @@ on:
 
 
 
-jobs:
-  conventional-commits:
-    name: Conventional Commits
-    runs-on: ubuntu-latest
-    permissions:
-        contents: read
-    steps:
-        - uses: actions/checkout@v3
-
-        - uses: webiny/action-conventional-commits@v1.2.0
-          with:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              allowed-commit-types: "docs,fix,feat,chore,style,refactor,perf,test"
-
-
-
 # jobs:
-#   slackNotification:
-#     name: Slack Notification
+#   conventional-commits:
+#     name: Conventional Commits
 #     runs-on: ubuntu-latest
+#     permissions:
+#         contents: read
 #     steps:
-#     - uses: actions/checkout@v2
-#     - name: Slack Notification
-#       uses: rtCamp/action-slack-notify@v2
-#       env:
-#         # SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-#         SLACK_CHANNEL: random
-#         SLACK_USERNAME: dhyey
+#         - uses: actions/checkout@v3
+
+#         - uses: webiny/action-conventional-commits@v1.2.0
+#           with:
+#               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#               allowed-commit-types: "docs,fix,feat,chore,style,refactor,perf,test"
+
+
+
+jobs:
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: slackapi/slack-github-action@v1.24.0
+      with: 
+        channel-id: 'C04BK06SMFZ'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      # uses: rtCamp/action-slack-notify@v2
+      # env:
+      #   # SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #   SLACK_CHANNEL: random
+      #   SLACK_USERNAME: dhyey
 
 # jobs:
 #   spell-check:
