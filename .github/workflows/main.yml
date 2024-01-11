@@ -38,6 +38,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Slack Notification
+      id: slack
       uses: slackapi/slack-github-action@v1.24.0
       # with: 
       #   channel-id: 'C04BK06SMFZ'
