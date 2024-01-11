@@ -41,18 +41,25 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Bump Version and Push Tag
-      id: tag_version
-      uses: mathieudutour/github-tag-action@v6.1
+    # - name: Bump Version and Push Tag
+    #   id: tag_version
+    #   uses: mathieudutour/github-tag-action@v6.1
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Read Changelog File
+      id: ghpages
+      uses: jaywcjlove/github-action-read-file@main
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        path: CHANGELOG.md
         
     - name: Post to a Slack channel
       id: slack
       uses: slackapi/slack-github-action@v1.24.0
       with:
         channel-id: 'C06E434BUPJ'
-        slack-message: "CI/CD next-demo: <@Dhyey Bhattasana>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.tag_version.outputs.changelog }}"
+        # slack-message: "CI/CD next-demo: <@Dhyey Bhattasana>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.tag_version.outputs.changelog }}"
+        slack-message: "CI/CD next-demo: <@Dhyey Bhattasana>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.ghpages.outputs.content }}"
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       # uses: rtCamp/action-slack-notify@v2
