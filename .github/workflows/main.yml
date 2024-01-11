@@ -40,17 +40,19 @@ jobs:
       pull-requests: write
     steps:
     - uses: actions/checkout@v2
+    
     - name: Bump Version and Push Tag
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Post to a Slack channel
       id: slack
       uses: slackapi/slack-github-action@v1.24.0
       with:
         channel-id: 'C06E434BUPJ'
-        slack-message: "CI/CD next-demo: <@D04BZD3TY1Z>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.tag_version.outputs.changelog }}"
+        slack-message: "CI/CD next-demo: <@Dhyey Bhattasana>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.tag_version.outputs.changelog }}"
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       # uses: rtCamp/action-slack-notify@v2
