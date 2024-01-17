@@ -57,7 +57,7 @@ jobs:
       id: slack
       uses: slackapi/slack-github-action@v1.24.0
       with:
-        channel-id: 'D05UPE89YD7'
+        channel-id: 'C060AJ95TT8'
         # slack-message: "CI/CD next-demo: <@Dhyey Bhattasana>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.tag_version.outputs.changelog }}"
         slack-message: "*CI/CD next-demo:* <@D05UPE89YD7>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.ghpages.outputs.content }}"
       env:
