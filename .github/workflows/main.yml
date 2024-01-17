@@ -59,7 +59,7 @@ jobs:
       with:
         channel-id: 'C06E434BUPJ'
         # slack-message: "CI/CD next-demo: <@Dhyey Bhattasana>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.tag_version.outputs.changelog }}"
-        slack-message: "*CI/CD next-demo:* <@D05UPE89YD7>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.ghpages.outputs.content }}"
+        slack-message: "*CI/CD next-demo:* <@C060AJ95TT8>\n*Web app URL:* www.facebook.com\n*Changelog -> *\n${{ steps.ghpages.outputs.content }}"
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       # uses: rtCamp/action-slack-notify@v2
