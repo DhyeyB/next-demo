@@ -1,37 +1,75 @@
 name: Release Please testing
 on:
   push:
-    branches: 
+    branches:
       - main
       - staging
       - dev
       - feature
 
-
-      
 # permissions:
 #   contents: write
 #   pull-requests: write
 
-
-
 jobs:
-  conventional-commits:
-    name: Conventional Commits
+  start-runner:
+    name: Start self-hosted EC2 runner
     runs-on: ubuntu-latest
-    permissions:
-        contents: read
+    outputs:
+      label: ${{ steps.start-ec2-runner.outputs.label }}
+      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
     steps:
-        - uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Start EC2 runner
+        id: start-ec2-runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: start
+          github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          ec2-image-id: ami-03f4878755434977f
+          ec2-instance-type: t2.micro
+          subnet-id: subnet-0b2be48f9a3703df0
+          security-group-id: sg-071b19002fb10294e
 
-        - uses: webiny/action-conventional-commits@v1.2.0
-          with:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              allowed-commit-types: "docs,fix,feat,chore,style,refactor,perf,test"
+  stop-runner:
+    name: Stop self-hosted EC2 runner
+    needs:
+      - start-runner # required to get output from the start-runner job
+      # - do-the-job # required to wait when the main job is done
+    runs-on: ubuntu-latest
+    if: ${{ always() }} # required to stop the runner even if the error happened in the previous jobs
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Stop EC2 runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: stop
+          github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
 
+  # conventional-commits:
+  #   name: Conventional Commits
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #       contents: read
+  #   steps:
+  #       - uses: actions/checkout@v3
 
-              
-
+  #       - uses: webiny/action-conventional-commits@v1.2.0
+  #         with:
+  #             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #             allowed-commit-types: "docs,fix,feat,chore,style,refactor,perf,test
 # jobs:
 #   slackNotification:
 #     name: Slack Notification
@@ -63,12 +101,12 @@ jobs:
 #             cspell:typescript/dict/typescript.txt
 #             cspell:node/dict/node.txt
 
-      # - uses: wow-actions/spell-checker@v1
-      #   with:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     include: **/*.md
+# - uses: wow-actions/spell-checker@v1
+#   with:
+#     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#     include: **/*.md
 
-      # - uses: rojopolis/spellcheck-github-actions@0.35.0
-      #   name: Spellcheck
-      #   with:
-      #     config: ./spellcheck.yaml
+# - uses: rojopolis/spellcheck-github-actions@0.35.0
+#   name: Spellcheck
+#   with:
+#     config: ./spellcheck.yaml
