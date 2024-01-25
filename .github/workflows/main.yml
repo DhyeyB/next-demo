@@ -36,11 +36,29 @@ jobs:
           subnet-id: subnet-0b2be48f9a3703df0
           security-group-id: sg-071b19002fb10294e
 
+  tests_e2e:
+    name: test suit running
+    needs:
+      - start-runner
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    steps:
+      - uses: actions/checkout@v3
+      - run:
+          ls
+          pwd
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
+          source ~/.bashrc
+          nvm install v18.19.0
+          node --version
+          npm --version
+          npm install -g yarn
+          yarn --version
+
   stop-runner:
     name: Stop self-hosted EC2 runner
     needs:
       - start-runner # required to get output from the start-runner job
-      # - do-the-job # required to wait when the main job is done
+      - tests_e2e # required to wait when the main job is done
     runs-on: ubuntu-latest
     if: ${{ always() }} # required to stop the runner even if the error happened in the previous jobs
     steps:
