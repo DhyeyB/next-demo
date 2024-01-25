@@ -46,15 +46,17 @@ jobs:
       - run: |
           ls
           pwd
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh
-          source ~/.bashrc
-          cat ~/.bashrc
+          # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh
+          # source ~/.bashrc
+          # cat ~/.bashrc
           # nvm -v
           # nvm install v18.19.0
-          # node --version
-          # npm --version
-          # npm install -g yarn
-          # yarn --version
+          curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          node --version
+          npm --version
+          npm install -g yarn
+          yarn --version
 
   stop-runner:
     name: Stop self-hosted EC2 runner
