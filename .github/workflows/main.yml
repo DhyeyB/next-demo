@@ -48,7 +48,8 @@ jobs:
           pwd
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh
           source ~/.bashrc
-          nvm -v
+          cat ~/.bashrc
+          # nvm -v
           # nvm install v18.19.0
           # node --version
           # npm --version
