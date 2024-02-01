@@ -28,7 +28,7 @@ jobs:
 
       - name: conditional job
         run: |
-          if git diff --quiet --exit-code HEAD^ HEAD -- pages/; then
+          if cd $GITHUB_WORKSPACE && git diff --quiet --exit-code HEAD^ HEAD -- pages/; then
             echo "No changes in 'pages/' directory. Skipping conditional job."
           else
             echo "Changes detected in 'pages/' directory. Running conditional job."
@@ -37,7 +37,7 @@ jobs:
 
       - name: conditional job
         if: |
-          content(git diff --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/)
+          content(git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/)
         run: |
           echo "conditional job"
 
