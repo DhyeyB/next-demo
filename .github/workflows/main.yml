@@ -37,7 +37,8 @@ jobs:
           fi
 
       - name: conditional job
-        if: contains(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- pages/)
+        if: |
+          git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- pages/ == "true"
         run: |
           echo "conditional job"
 
