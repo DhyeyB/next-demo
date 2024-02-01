@@ -28,13 +28,11 @@ jobs:
 
       - name: conditional job
         run: |
-          # sh diff.sh
           if git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/; then
             echo "No changes in 'pages/' directory. Skipping conditional job."
           else
             echo "Changes detected in 'pages/' directory. Running conditional job."
           fi
-          # git diff --exit-code ${{ github.sha }}^ ${{ github.sha }}
 
       - name: conditional job
         if: |
