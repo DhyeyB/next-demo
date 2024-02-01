@@ -26,9 +26,13 @@ jobs:
         run: |
           echo "ec2_server_ip=dhyey" >> $GITHUB_OUTPUT
 
+      - name: Display commit hash
+        run: |
+          echo "Commit SHA: ${{ github.sha }}"
+
       - name: conditional job
         if:
-          contains(git diff --name-only ${{ github.sha }}^ ${{ github.sha }}, 'pages/')
+          contains(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- pages/)
         run: |
           echo "conditional job"
 
