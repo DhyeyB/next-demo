@@ -29,7 +29,7 @@ jobs:
       - name: Display commit hash
         run: |
           echo "Commit SHA: ${{ github.sha }}"
-          git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- pages/
+          git diff --name-only HEAD^ HEAD -- pages/
 
       - name: conditional job
         if:
