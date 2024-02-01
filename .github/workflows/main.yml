@@ -28,12 +28,13 @@ jobs:
 
       - name: conditional job
         run: |
-          if [ git diff --quiet --exit-code HEAD^ HEAD -- pages/ ]; then
-            echo "No changes in 'pages/' directory. Skipping conditional job."
-          else
-            echo "Changes detected in 'pages/' directory. Running conditional job."
-            # Add your conditional job steps here
-          fi
+          # if [ git diff --quiet --exit-code HEAD^ HEAD -- pages/ ]; then
+          #   echo "No changes in 'pages/' directory. Skipping conditional job."
+          # else
+          #   echo "Changes detected in 'pages/' directory. Running conditional job."
+          #   # Add your conditional job steps here
+          # fi
+          git diff --quiet --exit-code HEAD^ HEAD
 
       - name: conditional job
         if: |
