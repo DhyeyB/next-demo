@@ -36,7 +36,9 @@ jobs:
 
       - name: conditional job
         if: |
-          content(git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/)
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/feature' &&
+          contains(git diff --name-only ${{ github.sha }}^ ${{ github.sha }}, 'pages/')
         run: |
           echo "conditional job"
 
