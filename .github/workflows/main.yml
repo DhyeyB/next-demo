@@ -37,7 +37,7 @@ jobs:
 
       - name: conditional job
         if: |
-          content(git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/)
+          content(git diff --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/)
         run: |
           echo "conditional job"
 
