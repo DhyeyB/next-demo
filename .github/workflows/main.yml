@@ -26,10 +26,10 @@ jobs:
         run: |
           echo "ec2_server_ip=dhyey" >> $GITHUB_OUTPUT
 
-      - name: Display commit hash
-        run: |
-          echo "Commit SHA: ${{ github.sha }}"
-          git diff --name-only HEAD^ HEAD -- pages/
+      # - name: Display commit hash
+      #   run: |
+      #     echo "Commit SHA: ${{ github.sha }}"
+      #     git diff --name-only HEAD^ HEAD -- pages/
 
       - name: conditional job
         if:
