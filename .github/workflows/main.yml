@@ -32,7 +32,6 @@ jobs:
             echo "No changes in 'pages/' directory. Skipping conditional job."
           else
             echo "Changes detected in 'pages/' directory. Running conditional job."
-            # Add your conditional job steps here
           fi
           # git diff --exit-code ${{ github.sha }}^ ${{ github.sha }}
 
