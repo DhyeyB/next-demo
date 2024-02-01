@@ -26,6 +26,12 @@ jobs:
         run: |
           echo "ec2_server_ip=dhyey" >> $GITHUB_OUTPUT
 
+      - name: conditional job
+        if:
+          contains(git diff --name-only ${{ github.sha }}^ ${{ github.sha }}, 'pages/')
+        run: |
+          echo "conditional job"
+
   second-job:
     name: running second job
     runs-on: ubuntu-latest
