@@ -32,7 +32,7 @@ jobs:
       #     git diff --name-only HEAD^ HEAD -- pages/
 
       - name: conditional job
-        if:
+        if: >
           git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/
         run: |
           echo "conditional job"
