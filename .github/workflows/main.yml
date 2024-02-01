@@ -34,7 +34,7 @@ jobs:
           #   echo "Changes detected in 'pages/' directory. Running conditional job."
           #   # Add your conditional job steps here
           # fi
-          git diff --quiet --exit-code HEAD^ HEAD
+          git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }}
 
       - name: conditional job
         if: |
