@@ -24,7 +24,7 @@ jobs:
       - name: Get Terraform Backup Files
         id: test-variable
         run: |
-          echo "ec2_server_ip=$dhyey" >> $GITHUB_OUTPUT
+          echo "ec2_server_ip=dhyey" >> $GITHUB_OUTPUT
 
   second-job:
     name: running second job
