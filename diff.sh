@@ -3,3 +3,4 @@ if git diff --quiet --exit-code HEAD^ HEAD -- pages/; then
 else
     echo "Changes detected in 'pages/' directory. Running conditional job."
 fi
+echo ${{git diff --exit-code HEAD^ HEAD}}
