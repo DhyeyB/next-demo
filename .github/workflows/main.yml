@@ -12,49 +12,74 @@ on:
 #   pull-requests: write
 
 jobs:
-  first-job:
-    name: Infrastructure Deployment
+  code-deploy:
+    name: code deploy
     runs-on: ubuntu-latest
-    outputs:
-      ec2_server_ip: ${{steps.test-variable.outputs.ec2_server_ip}}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Get Terraform Backup Files
-        id: test-variable
-        run: |
-          echo "ec2_server_ip=dhyey" >> $GITHUB_OUTPUT
-
-      - name: conditional job
-        run: |
-          if git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/; then
-            echo "No changes in 'pages/' directory. Skipping conditional job."
-          else
-            echo "Changes detected in 'pages/' directory. Running conditional job."
-          fi
-
-      - name: conditional job
-        if: contains(git diff --quiet --name-only ${{ github.sha }}^ ${{ github.sha }} -- pages/)
-        run: |
-          echo "conditional job"
-
-  second-job:
-    name: running second job
-    runs-on: ubuntu-latest
-    needs:
-      - first-job
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: testing output variable
+      - name: Deployment of myc web code
         env:
-          output_variable: ${{ needs.first-job.outputs.ec2_server_ip }}
+          PRIVATE_KEY: |
+            ${{ secrets.LOGIN_SSH_PRI_KEY }}
+          HOSTNAME: |
+            ${{ secrets.HOST }}
+          USER_NAME: |
+            ${{ secrets.USERNAME }}
+        #   APP_ENV: ${{needs.env-selector.outputs.env}}
         run: |
-          echo ${{ needs.first-job.outputs.ec2_server_ip }}
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key $USER_NAME@$HOSTNAME '
+            mkdir test
+            touch test.txt
+            ls -la
+            '
+  # first-job:
+  #   name: Infrastructure Deployment
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     ec2_server_ip: ${{steps.test-variable.outputs.ec2_server_ip}}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+
+  #     - name: Get Terraform Backup Files
+  #       id: test-variable
+  #       run: |
+  #         echo "ec2_server_ip=dhyey" >> $GITHUB_OUTPUT
+
+  #     - name: conditional job
+  #       run: |
+  #         if git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/; then
+  #           echo "No changes in 'pages/' directory. Skipping conditional job."
+  #         else
+  #           echo "Changes detected in 'pages/' directory. Running conditional job."
+  #         fi
+
+  #     - name: conditional job
+  #       if: contains(git diff --quiet --name-only ${{ github.sha }}^ ${{ github.sha }} -- pages/)
+  #       run: |
+  #         echo "conditional job"
+
+  # second-job:
+  #   name: running second job
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - first-job
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+
+  #     - name: testing output variable
+  #       env:
+  #         output_variable: ${{ needs.first-job.outputs.ec2_server_ip }}
+  #       run: |
+  #         echo ${{ needs.first-job.outputs.ec2_server_ip }}
 
   # start-runner:
   #   name: Start self-hosted EC2 runner
