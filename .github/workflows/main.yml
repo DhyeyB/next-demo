@@ -32,7 +32,7 @@ jobs:
         #   APP_ENV: ${{needs.env-selector.outputs.env}}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key $USER_NAME@$HOSTNAME '
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.LOGIN_SSH_PRI_KEY }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} '
             mkdir test
             touch test.txt
             ls -la
