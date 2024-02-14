@@ -25,10 +25,6 @@ jobs:
         env:
           PRIVATE_KEY: |
             ${{ secrets.LOGIN_SSH_PRI_KEY }}
-          HOSTNAME: |
-            ${{ secrets.HOST }}
-          USER_NAME: |
-            ${{ secrets.USERNAME }}
         #   APP_ENV: ${{needs.env-selector.outputs.env}}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
