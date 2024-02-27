@@ -42,11 +42,34 @@ jobs:
       - start-runner
     runs-on: ${{ needs.start-runner.outputs.label }}
     steps:
-      - uses: actions/checkout@v3
-      - run: |
-          ls
-          chmod -x android.sh
-          sh android.sh
+      - name: Checkout the code to specific branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+            
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+                
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+              
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+              
+      # - uses: actions/checkout@v3
+      # - run: |
+      #     ls
+      #     chmod -x android.sh
+      #     sh android.sh
 
   stop-runner:
     name: Stop self-hosted EC2 runner
