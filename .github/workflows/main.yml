@@ -12,118 +12,125 @@ on:
 #   pull-requests: write
 
 jobs:
-  first-job:
-    name: Infrastructure Deployment
+  start-runner:
+    name: Start self-hosted EC2 runner
     runs-on: ubuntu-latest
     outputs:
-      ec2_server_ip: ${{steps.test-variable.outputs.ec2_server_ip}}
+      label: ${{ steps.start-ec2-runner.outputs.label }}
+      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          fetch-depth: 0
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Start EC2 runner
+        id: start-ec2-runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: start
+          github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          ec2-image-id: ${{ vars.AMI_ID }}
+          ec2-instance-type: ${{ vars.INSTANCE_TYPE }}
+          subnet-id: subnet-0b2be48f9a3703df0
+          security-group-id: sg-071b19002fb10294e
 
-      - name: Get Terraform Backup Files
-        id: test-variable
-        run: |
-          echo "ec2_server_ip=dhyey" >> $GITHUB_OUTPUT
-
-      - name: conditional job
-        run: |
-          if git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/; then
-            echo "No changes in 'pages/' directory. Skipping conditional job."
-          else
-            echo "Changes detected in 'pages/' directory. Running conditional job."
-          fi
-
-      - name: conditional job
-        if: contains(git diff --quiet --name-only ${{ github.sha }}^ ${{ github.sha }} -- pages/)
-        run: |
-          echo "conditional job"
-
-  second-job:
-    name: running second job
-    runs-on: ubuntu-latest
+  tests_e2e:
+    name: Build Android apk
     needs:
-      - first-job
+      - start-runner
+    runs-on: ${{ needs.start-runner.outputs.label }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - run: |
+          ls
+          chmod -x android.sh
 
-      - name: testing output variable
-        env:
-          output_variable: ${{ needs.first-job.outputs.ec2_server_ip }}
-        run: |
-          echo ${{ needs.first-job.outputs.ec2_server_ip }}
+  stop-runner:
+    name: Stop self-hosted EC2 runner
+    needs:
+      - start-runner # required to get output from the start-runner job
+      - tests_e2e # required to wait when the main job is done
+    runs-on: ubuntu-latest
+    if: ${{ always() }} # required to stop the runner even if the error happened in the previous jobs
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Stop EC2 runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: stop
+          github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
 
-  # start-runner:
-  #   name: Start self-hosted EC2 runner
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # first-job:
+  #   name: Infrastructure Deployment
   #   runs-on: ubuntu-latest
   #   outputs:
-  #     label: ${{ steps.start-ec2-runner.outputs.label }}
-  #     ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+  #     ec2_server_ip: ${{steps.test-variable.outputs.ec2_server_ip}}
   #   steps:
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v4
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
   #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: ${{ vars.AWS_REGION }}
-  #     - name: Start EC2 runner
-  #       id: start-ec2-runner
-  #       uses: machulav/ec2-github-runner@v2
-  #       with:
-  #         mode: start
-  #         github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-  #         ec2-image-id: ${{ vars.AMI_ID }}
-  #         ec2-instance-type: ${{ vars.INSTANCE_TYPE }}
-  #         subnet-id: subnet-0b2be48f9a3703df0
-  #         security-group-id: sg-071b19002fb10294e
+  #         fetch-depth: 0
 
-  # tests_e2e:
-  #   name: test suit running
-  #   needs:
-  #     - start-runner
-  #   runs-on: ${{ needs.start-runner.outputs.label }}
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: |
-  #         ls
-  #         pwd
-  #         # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh
-  #         # source ~/.bashrc
-  #         # cat ~/.bashrc
-  #         # nvm -v
-  #         # nvm install v18.19.0
-  #         curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-  #         sudo apt-get install -y nodejs
-  #         node --version
-  #         npm --version
-  #         npm install -g yarn
-  #         yarn --version
+  #     - name: Get Terraform Backup Files
+  #       id: test-variable
+  #       run: |
+  #         echo "ec2_server_ip=dhyey" >> $GITHUB_OUTPUT
 
-  # stop-runner:
-  #   name: Stop self-hosted EC2 runner
-  #   needs:
-  #     - start-runner # required to get output from the start-runner job
-  #     - tests_e2e # required to wait when the main job is done
+  #     - name: conditional job
+  #       run: |
+  #         if git diff --quiet --exit-code ${{ github.sha }}^ ${{ github.sha }} -- pages/; then
+  #           echo "No changes in 'pages/' directory. Skipping conditional job."
+  #         else
+  #           echo "Changes detected in 'pages/' directory. Running conditional job."
+  #         fi
+
+  #     - name: conditional job
+  #       if: contains(git diff --quiet --name-only ${{ github.sha }}^ ${{ github.sha }} -- pages/)
+  #       run: |
+  #         echo "conditional job"
+
+  # second-job:
+  #   name: running second job
   #   runs-on: ubuntu-latest
-  #   if: ${{ always() }} # required to stop the runner even if the error happened in the previous jobs
+  #   needs:
+  #     - first-job
   #   steps:
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v4
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: ${{ vars.AWS_REGION }}
-  #     - name: Stop EC2 runner
-  #       uses: machulav/ec2-github-runner@v2
-  #       with:
-  #         mode: stop
-  #         github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-  #         label: ${{ needs.start-runner.outputs.label }}
-  #         ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
+  #     - name: testing output variable
+  #       env:
+  #         output_variable: ${{ needs.first-job.outputs.ec2_server_ip }}
+  #       run: |
+  #         echo ${{ needs.first-job.outputs.ec2_server_ip }}
+
+  
   # conventional-commits:
   #   name: Conventional Commits
   #   runs-on: ubuntu-latest
