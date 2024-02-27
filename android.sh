@@ -6,7 +6,7 @@ echo "======== Java Installation steps ======="
 echo "=========================================="
 
 # sudo apt install openjdk-8-jdk
-sudo apt install openjdk-17-jre -Y
+sudo apt install openjdk-17-jre -y
 # export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 # export PATH=$JAVA_HOME/bin:$PATH
 # echo $JAVA_HOME
