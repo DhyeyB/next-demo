@@ -46,6 +46,7 @@ jobs:
       - run: |
           ls
           chmod -x android.sh
+          sh android.sh
 
   stop-runner:
     name: Stop self-hosted EC2 runner
