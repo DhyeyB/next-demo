@@ -19,8 +19,8 @@ echo "=========================================="
 # wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
 wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
 ls
-unzip commandlinetools-linux-11076708_latest.zip -d android-sdk
-cd android-sdk
+unzip commandlinetools-linux-11076708_latest.zip
+cd cmdline-tools
 mkdir latest
 mv  bin/ latest/
 mv lib/ latest/
